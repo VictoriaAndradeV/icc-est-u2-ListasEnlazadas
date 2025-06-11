@@ -45,14 +45,14 @@ public class MenuController {
         String name = consoleView.getInput("Ingrese el nombre: ");
         String phone = consoleView.getInput("Ingrese el teléfono: ");
 
-        Contact<String, String> contact = new Contact<>(name, phone);
+        Contact contact = new Contact(name, phone);
         contactManager.addContact(contact);
         consoleView.showMessage("Contacto agregado ");
     }
 
     private void findContact() {
         String name = consoleView.getInput("Ingrese el nombre a buscar: ");
-        Contact<?, ?> contact = contactManager.findContactByName(name);
+        Contact contact = contactManager.findContactByName(name);
         if (contact != null) {
             consoleView.showMessage("Contacto encontrado: " + contact);
         } else {

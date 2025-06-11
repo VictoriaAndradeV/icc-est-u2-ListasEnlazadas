@@ -6,6 +6,6 @@ public class App {
         menuController.showMenu();
 
         Contact c1 = new Contact("Juan", "123");
-        Contact c4 = new Contact("Juan");
+        //Contact c4 = new Contact("Juan");
     }
 }

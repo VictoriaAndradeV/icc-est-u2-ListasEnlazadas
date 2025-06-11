@@ -5,18 +5,18 @@ import model.LinkedList;
 import model.NodeGeneric;
 
 public class ContactManager {
-    private LinkedList<Contact<String, String>> contacts;
+    private LinkedList<Contact> contacts;
 
     public ContactManager() {
         this.contacts = new LinkedList<>();
     }
 
-    public void addContact(Contact<String, String> contact) {
+    public void addContact(Contact contact) {
         contacts.appendToTail(contact);
     }
 
-    public Contact<?, ?> findContactByName(String name) {
-        NodeGeneric<Contact<String, String>> current = contacts.getHead();
+    public Contact findContactByName(String name) {
+        NodeGeneric<Contact> current = contacts.getHead();
         while (current != null) {
             if (current.getData().getName().equals(name)) {
                 return current.getData();
@@ -27,8 +27,8 @@ public class ContactManager {
     }
 
     public void deleteContactByName(String name) {
-        NodeGeneric<Contact<String, String>> current = contacts.getHead();
-        NodeGeneric<Contact<String, String>> prev = null;
+        NodeGeneric<Contact> current = contacts.getHead();
+        NodeGeneric<Contact> prev = null;
 
         while (current != null) {
             if (current.getData().getName().equals(name)) {
