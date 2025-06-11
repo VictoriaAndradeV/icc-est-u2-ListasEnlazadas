@@ -1,23 +1,24 @@
 package controller;
 
+import model.Contact;
 import view.ConsoleView;
 
 public class MenuController {
     private ContactManager contactManager;
     private ConsoleView consoleView;
 
-    public MenuController(ContactManager contactManager, ConsoleView consoleView) {
-        this.contactManager = contactManager;
-        this.consoleView = consoleView;
+    public MenuController() {
+        this.contactManager = new ContactManager();
+        this.consoleView = new ConsoleView();
     }
 
     public void showMenu() {
-        int option;
+        int opcion;
         do {
-            consoleView.printMenu();
-            option = consoleView.readOption();
+            consoleView.displayMenu();
+            opcion = Integer.parseInt(consoleView.getInput(""));
 
-            switch (option) {
+            switch (opcion) {
                 case 1:
                     addContact();
                     break;
@@ -31,38 +32,42 @@ public class MenuController {
                     printList();
                     break;
                 case 5:
-                    consoleView.printMessage("Saliendo del programa...");
+                    consoleView.showMessage("Saliendo del sistema...");
                     break;
                 default:
-                    consoleView.printMessage("Opción inválida. Intente de nuevo.");
+                    consoleView.showMessage("Opción no válida");
             }
-        } while (option != 5);
+        } while (opcion != 5);
     }
 
-    public void addContact() {
-        String name = consoleView.readInput("Ingrese el nombre:");
-        String phone = consoleView.readInput("Ingrese el número:");
+    //administra el menu
+    private void addContact() {
+        String name = consoleView.getInput("Ingrese el nombre: ");
+        String phone = consoleView.getInput("Ingrese el teléfono: ");
+
         Contact<String, String> contact = new Contact<>(name, phone);
         contactManager.addContact(contact);
+        consoleView.showMessage("Contacto agregado ");
     }
 
-    public void findContact() {
-        String name = consoleView.readInput("Ingrese el nombre a buscar:");
+    private void findContact() {
+        String name = consoleView.getInput("Ingrese el nombre a buscar: ");
         Contact<?, ?> contact = contactManager.findContactByName(name);
         if (contact != null) {
-            consoleView.printMessage("Contacto encontrado: " + contact);
+            consoleView.showMessage("Contacto encontrado: " + contact);
         } else {
-            consoleView.printMessage("Contacto no encontrado.");
+            consoleView.showMessage("Contacto NO encontrado");
         }
     }
 
-    public void deleteContact() {
-        String name = consoleView.readInput("Ingrese el nombre a eliminar:");
+    private void deleteContact() {
+        String name = consoleView.getInput("Ingrese el nombre a eliminar: ");
         contactManager.deleteContactByName(name);
-        consoleView.printMessage("Contacto eliminado si existía.");
+        consoleView.showMessage("Contacto eliminado ");
     }
 
-    public void printList() {
+    private void printList() {
+        consoleView.showMessage("\n--- Lista de Contactos ---");
         contactManager.printList();
     }
 }

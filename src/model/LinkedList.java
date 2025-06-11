@@ -1,40 +1,43 @@
 package model;
 
-public class LinkedList <T> {
-    public NodeGeneric<T> head; // Referencia al primer nodo de la lista
-    private int size = 0; // Contador del número de nodos en la lista
+public class LinkedList<T> {
+    private NodeGeneric<T> head;
+    private int size;
 
-    public void appendToTail(T data) {
+    public LinkedList() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    public void appendToTail(T value) {
+        NodeGeneric<T> newNode = new NodeGeneric<>(value);
         if (head == null) {
-            head = new NodeGeneric<>(data);
-            size++;
-            return;
+            head = newNode;
+        } else {
+            NodeGeneric<T> current = head;
+            while (current.getNext() != null) {
+                current = current.getNext();
+            }
+            current.setNext(newNode);
         }
-
-        NodeGeneric<T> current = head;
-        while (current.getNext() != null) {
-            current = current.getNext();
-        }
-        current.setNext(new NodeGeneric<>(data));
         size++;
     }
 
-    public T findByValue(T data){
+    public T findByValue(T value) {
         NodeGeneric<T> current = head;
-        while(current != null){
-            if(current.getData().equals(data)){
+        while (current != null) {
+            if (current.getData().equals(value)) {
                 return current.getData();
             }
             current = current.getNext();
         }
         return null;
     }
-   
-    public void deleteNode(T data) {
-        if (head == null)
-            return;
 
-        if (head.getData().equals(data)) {
+    public void deleteByValue(T value) {
+        if (head == null) return;
+
+        if (head.getData().equals(value)) {
             head = head.getNext();
             size--;
             return;
@@ -42,7 +45,7 @@ public class LinkedList <T> {
 
         NodeGeneric<T> current = head;
         while (current.getNext() != null) {
-            if (current.getNext().getData().equals(data)) {
+            if (current.getNext().getData().equals(value)) {
                 current.setNext(current.getNext().getNext());
                 size--;
                 return;
@@ -52,28 +55,20 @@ public class LinkedList <T> {
     }
 
     public void print() {
-        if (head == null) {
-            System.out.println("END");
-            return;
-        }
         NodeGeneric<T> current = head;
-        while (current.getNext() != null) {
-            System.out.print(current.getData() + " -> ");
+        while (current != null) {
+            System.out.println(current.getData());
             current = current.getNext();
         }
-        System.out.println(current.getData() + " -> END");
     }
 
+    // Getters y Setters
     public NodeGeneric<T> getHead() {
         return head;
     }
 
     public void setHead(NodeGeneric<T> head) {
         this.head = head;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     public int getSize() {
